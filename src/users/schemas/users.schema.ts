@@ -3,27 +3,30 @@ import { Document } from 'mongoose';
 
 import { Address, AddressSchema } from './address.schema';
 
-export type CustomerDocument = Customer & Document;
+export type UserDocument = User & Document;
 
 @Schema()
-export class Customer {
+export class User {
   @Prop({ required: true })
-    firstName!: string;
+  firstName!: string;
 
   @Prop({ required: true })
-    lastName!: string;
+  lastName!: string;
 
   @Prop({ required: true })
-    email!: string;
+  email!: string;
 
   @Prop({ required: true })
-    phoneNumber!: string;
+  phoneNumber!: string;
 
   @Prop({ required: true })
-    password!: string;
+  password!: string;
+
+  @Prop({ required: true })
+  isAdmin!: boolean;
 
   @Prop({ type: AddressSchema, required: true })
-    address!: Address[];
+  address!: Address[];
 };
 
-export const CustomerSchema = SchemaFactory.createForClass(Customer);
+export const UserSchema = SchemaFactory.createForClass(User);
