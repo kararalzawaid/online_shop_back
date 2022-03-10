@@ -1,5 +1,5 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller, Body, Post, Get, Query, Param, Put, HttpCode, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Body, Post, Get, Query, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { ApiImplicitQueries } from 'nestjs-swagger-api-implicit-queries-decorator';
 
 import { ProductDto } from '@products/dto/product.dto';
