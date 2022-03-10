@@ -1,9 +1,9 @@
 import { Type } from 'class-transformer';
 import { AddressDto } from './address.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, ValidateNested, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsString, IsNotEmpty, ValidateNested, IsEmail, IsPhoneNumber, IsBoolean } from 'class-validator';
 
-export class CustomerDto {
+export class UserDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -27,11 +27,16 @@ export class CustomerDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-    password!: string;
+  password!: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => AddressDto)
-    address?: AddressDto;
+  address?: AddressDto;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsBoolean()
+  isAdmin?: boolean;
 };

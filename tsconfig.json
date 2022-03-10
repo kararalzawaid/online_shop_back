@@ -13,14 +13,17 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@customers/*": [
-        "src/customers/*"
+      "@users/*": [
+        "src/users/*"
       ],
       "@common/*": [
         "src/common/*"
       ],
       "@auth/*": [
         "src/auth/*"
+      ],
+      "@products/*": [
+        "src/products/*"
       ]
     }
   },

@@ -6,36 +6,36 @@ import { UnauthorizedException, Injectable, NotFoundException } from '@nestjs/co
 import { AuthService } from '@auth/services/auth/auth.service';
 
 import { LoginUserDto } from '@common/dto/login.dto';
-import { CustomerDto } from '@customers/dto/customer.dto';
-import { FiltersListDto } from '@customers/dto/filters-list.dto';
+import { UserDto } from 'src/users/dto/user.dto';
+import { FiltersListDto } from 'src/users/dto/filters-list.dto';
 
 import { getStartIndex, getLimitIndex } from '@common/helpers/pagination';
 
 import { SORT_DESC, SORT_ASC } from '@common/constants/sorting.constants';
 
-import { Customer, CustomerDocument } from '@customers/schemas/customers.schema';
+import { User, UserDocument } from 'src/users/schemas/users.schema';
 
 @Injectable()
-export class CustomersService {
+export class UsersService {
   constructor(
-    @InjectModel(Customer.name) private customerModel: Model<CustomerDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
     private authService: AuthService
   ) { }
 
-  async create(customerDto: CustomerDto): Promise<any> {
-    const user = await this.customerModel.findOne({ email: customerDto.email });
+  async create(userDto: UserDto): Promise<any> {
+    const user = await this.userModel.findOne({ email: userDto.email });
 
     if (user) {
       throw new Error('User already exist!.');
     }
 
-    customerDto.password = await bcrypt.hash(customerDto.password, 12);
+    userDto.password = await bcrypt.hash(userDto.password, 12);
 
-    return new this.customerModel(customerDto).save();
+    return new this.userModel(userDto).save();
   };
 
   async login(loginUserDto: LoginUserDto): Promise<any> {
-    const user = await this.customerModel.findOne({ email: loginUserDto.email });
+    const user = await this.userModel.findOne({ email: loginUserDto.email });
 
     if (!user) {
       throw new NotFoundException('Invalid credentials!.');
@@ -68,21 +68,21 @@ export class CustomersService {
       sortOptions[sort] = sortOrder.toLowerCase() === 'desc' ? SORT_DESC : SORT_ASC;
     }
 
-    const total = await this.customerModel.count(conditions);
+    const total = await this.userModel.count(conditions);
 
-    const customers = isPaginated
-      ? await this.customerModel
+    const users = isPaginated
+      ? await this.userModel
         .find(conditions)
         .skip(offset)
         .limit(itemsLimit)
         .sort(sortOptions)
         .exec()
-      : await this.customerModel
+      : await this.userModel
         .find(conditions)
         .sort(sortOptions)
         .exec();
 
-    return { items: customers, total };
+    return { items: users, total };
   }
 
   private getFilterListConditions(filtersListDto: FiltersListDto) {
@@ -106,14 +106,14 @@ export class CustomersService {
   }
 
   async getById(id: string): Promise<any> {
-    return this.customerModel.findById(id);
+    return this.userModel.findById(id);
   };
 
-  async update(id: string, customerDto: CustomerDto): Promise<any> {
-    return this.customerModel.findByIdAndUpdate(id, customerDto);
+  async update(id: string, userDto: UserDto): Promise<any> {
+    return this.userModel.findByIdAndUpdate(id, userDto);
   };
 
   async delete(id: string): Promise<void> {
-    await this.customerModel.remove({ _id: id });
+    await this.userModel.remove({ _id: id });
   };
 }
