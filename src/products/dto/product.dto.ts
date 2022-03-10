@@ -1,12 +1,11 @@
-import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, ValidateNested, IsEmail, IsPhoneNumber, IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class ProductDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  userId!: string;
+    userId!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -16,7 +15,7 @@ export class ProductDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  brandName!: string;
+    brandName!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -36,15 +35,15 @@ export class ProductDto {
   @IsString()
   @IsOptional()
   @ApiProperty()
-  size?: string;
+    size?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  numberInStock!: number;
+    numberInStock!: number;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
-  falvour?: string;
+    falvour?: string;
 };

@@ -27,16 +27,16 @@ export class UserDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  password!: string;
+    password!: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => AddressDto)
-  address?: AddressDto;
+    address?: AddressDto;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
-  isAdmin?: boolean;
+    isAdmin?: boolean;
 };

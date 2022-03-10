@@ -22,7 +22,7 @@ export class UsersService {
     private authService: AuthService
   ) { }
 
-  async create(userDto: UserDto): Promise<any> {
+  async create(userDto: UserDto): Promise<User> {
     const user = await this.userModel.findOne({ email: userDto.email });
 
     if (user) {
@@ -34,7 +34,7 @@ export class UsersService {
     return new this.userModel(userDto).save();
   };
 
-  async login(loginUserDto: LoginUserDto): Promise<any> {
+  async login(loginUserDto: LoginUserDto): Promise<string> {
     const user = await this.userModel.findOne({ email: loginUserDto.email });
 
     if (!user) {
@@ -105,11 +105,11 @@ export class UsersService {
     return conditions;
   }
 
-  async getById(id: string): Promise<any> {
+  async getById(id: string): Promise<User> {
     return this.userModel.findById(id);
   };
 
-  async update(id: string, userDto: UserDto): Promise<any> {
+  async update(id: string, userDto: UserDto): Promise<User> {
     return this.userModel.findByIdAndUpdate(id, userDto);
   };
 
