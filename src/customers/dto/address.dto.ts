@@ -8,25 +8,25 @@ export class AddressDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  street?: string;
+    street?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  zip?: string;
+    zip?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  town?: string;
+    town?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  county?: string;
+    county?: string;
 
   @ApiProperty()
   @IsString()
   @IsOptional()
-  country?: string;
+    country?: string;
 }

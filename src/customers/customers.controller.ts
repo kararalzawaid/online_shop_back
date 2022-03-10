@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Request, Controller, Body, Post, Get, Query, Param, Put, HttpCode, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Body, Post, Get, Query, Param, Put, HttpCode, Delete, UseGuards } from '@nestjs/common';
 import { ApiImplicitQueries } from 'nestjs-swagger-api-implicit-queries-decorator';
 
 import { CustomersService } from '@customers/customers.service';
@@ -22,7 +22,7 @@ export class CustomersController {
   @Post('login')
   @HttpCode(200)
   async login(@Body() loginUserDto: LoginUserDto): Promise<Observable<any>> {
-    return await this.customersService.login(loginUserDto)
+    return await this.customersService.login(loginUserDto);
   }
 
   @Post()
@@ -41,7 +41,7 @@ export class CustomersController {
     { name: 'page', description: 'Current page', required: false },
     { name: 'limit', description: 'Number of items per page', required: false },
     { name: 'sort', description: 'Sort items', required: false },
-    { name: 'sortOrder', description: 'Sort items by order ASC or DESC', required: false },
+    { name: 'sortOrder', description: 'Sort items by order ASC or DESC', required: false }
   ])
   async getAll(@Query() filtersDto: FiltersListDto): Promise<any> {
     return this.customersService.getList(filtersDto);

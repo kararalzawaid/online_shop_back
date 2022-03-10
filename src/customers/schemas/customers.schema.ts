@@ -8,22 +8,22 @@ export type CustomerDocument = Customer & Document;
 @Schema()
 export class Customer {
   @Prop({ required: true })
-  firstName!: string;
+    firstName!: string;
 
   @Prop({ required: true })
-  lastName!: string;
+    lastName!: string;
 
   @Prop({ required: true })
-  email!: string;
+    email!: string;
 
   @Prop({ required: true })
-  phoneNumber!: string;
+    phoneNumber!: string;
 
   @Prop({ required: true })
-  password!: string;
+    password!: string;
 
   @Prop({ type: AddressSchema, required: true })
-  address!: Address[];
+    address!: Address[];
 };
 
 export const CustomerSchema = SchemaFactory.createForClass(Customer);

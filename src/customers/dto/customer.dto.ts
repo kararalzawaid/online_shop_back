@@ -27,11 +27,11 @@ export class CustomerDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  password!: string;
+    password!: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => AddressDto)
-  address?: AddressDto;
+    address?: AddressDto;
 };

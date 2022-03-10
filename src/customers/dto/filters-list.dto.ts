@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 
-import { IsArray, IsBoolean, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class FiltersListDto {
   @IsString()
