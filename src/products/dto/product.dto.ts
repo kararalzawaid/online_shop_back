@@ -6,7 +6,7 @@ export class ProductDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  userId!: string;
+    userId!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -16,7 +16,7 @@ export class ProductDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  brandName!: string;
+    brandName!: string;
 
   @IsString()
   @IsNotEmpty()
@@ -36,15 +36,15 @@ export class ProductDto {
   @IsString()
   @IsOptional()
   @ApiProperty()
-  size?: string;
+    size?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  numberInStock!: number;
+    numberInStock!: number;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
-  falvour?: string;
+    falvour?: string;
 };

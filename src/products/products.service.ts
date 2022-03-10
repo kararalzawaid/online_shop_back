@@ -15,10 +15,10 @@ import { SORT_DESC, SORT_ASC } from '@common/constants/sorting.constants';
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>
   ) { }
 
-  async create(productDto: ProductDto): Promise<any> {
+  async create(productDto: ProductDto): Promise<Product> {
     return new this.productModel(productDto).save();
   };
 
@@ -73,4 +73,16 @@ export class ProductsService {
 
     return conditions;
   }
+
+  async getById(id: string): Promise<Product> {
+    return this.productModel.findById(id);
+  };
+
+  async update(id: string, productDto: ProductDto): Promise<Product> {
+    return this.productModel.findByIdAndUpdate(id, productDto);
+  };
+
+  async delete(id: string): Promise<void> {
+    await this.productModel.remove({ _id: id });
+  };
 }

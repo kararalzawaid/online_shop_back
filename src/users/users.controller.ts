@@ -21,7 +21,7 @@ export class UsersController {
 
   @Post('login')
   @HttpCode(200)
-  async login(@Body() loginUserDto: LoginUserDto): Promise<Observable<any>> {
+  async login(@Body() loginUserDto: LoginUserDto): Promise<string> {
     return await this.usersService.login(loginUserDto);
   }
 
@@ -47,18 +47,21 @@ export class UsersController {
   };
 
   @Get('/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get user by id' })
   async getById(@Param('id') id: string): Promise<any> {
     return this.usersService.getById(id);
   };
 
   @Put('/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update user by id' })
   async update(@Param('id') id: string, @Body() userDto: UserDto): Promise<any> {
     return this.usersService.update(id, userDto);
   };
 
   @Delete('/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete user by id' })
   async delete(@Param('id') id: string): Promise<void> {
     return this.usersService.delete(id);
