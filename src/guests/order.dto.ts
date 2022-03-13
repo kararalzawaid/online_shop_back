@@ -1,10 +1,15 @@
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, ValidateNested, IsEmail, IsPhoneNumber, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsArray, IsPhoneNumber, IsString, IsEmail, ValidateNested, IsNumber } from 'class-validator';
 
 import { AddressDto } from '@common/dto/address.dto';
 
-export class UserDto {
+export class GuestOrderDto {
+  @IsArray()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly productId!: string[];
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -25,19 +30,14 @@ export class UserDto {
   @ApiProperty()
   readonly phoneNumber!: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-    password!: string;
-
   @ApiProperty()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => AddressDto)
     address?: AddressDto;
 
-  @ApiProperty()
+  @IsNumber()
   @IsNotEmpty()
-  @IsBoolean()
-    isAdmin?: boolean;
+  @ApiProperty()
+  readonly status!: number;
 };

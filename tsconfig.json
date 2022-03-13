@@ -24,6 +24,9 @@
       ],
       "@products/*": [
         "src/products/*"
+      ],
+      "@guests/*": [
+        "src/guests/*"
       ]
     }
   },

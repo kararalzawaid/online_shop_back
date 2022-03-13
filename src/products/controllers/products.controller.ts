@@ -4,13 +4,13 @@ import { ApiImplicitQueries } from 'nestjs-swagger-api-implicit-queries-decorato
 
 import { ProductDto } from '@products/dto/product.dto';
 
-import { ProductsService } from '@products/products.service';
+import { ProductsService } from '@products/services/products.service';
 
-import { FiltersListDto } from '@users/dto/filters-list.dto';
+import { FiltersListDto } from '@common/dto/filters-list.dto';
 
 import { Product } from '@products/schema/products.schema';
 
-import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
+import { AdminGuard } from '@auth/guards/admin.guard';
 
 @ApiTags('products')
 @Controller('products')
@@ -21,7 +21,7 @@ export class ProductsController {
   ) { }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Create product' })
   async create(@Body() productDto: ProductDto): Promise<Product> {
     return await this.productsService.create(productDto);
@@ -48,14 +48,14 @@ export class ProductsController {
   };
 
   @Put('/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Update product by id' })
   async update(@Param('id') id: string, @Body() productDto: ProductDto): Promise<Product> {
     return this.productsService.update(id, productDto);
   };
 
   @Delete('/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Delete product by id' })
   async delete(@Param('id') id: string): Promise<void> {
     return this.productsService.delete(id);

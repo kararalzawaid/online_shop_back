@@ -6,8 +6,8 @@ import { UnauthorizedException, Injectable, NotFoundException } from '@nestjs/co
 import { AuthService } from '@auth/services/auth/auth.service';
 
 import { LoginUserDto } from '@common/dto/login.dto';
-import { UserDto } from 'src/users/dto/user.dto';
-import { FiltersListDto } from 'src/users/dto/filters-list.dto';
+import { UserDto } from '@users/dto/user.dto';
+import { FiltersListDto } from '@common/dto/filters-list.dto';
 
 import { getStartIndex, getLimitIndex } from '@common/helpers/pagination';
 
@@ -34,7 +34,7 @@ export class UsersService {
     return new this.userModel(userDto).save();
   };
 
-  async login(loginUserDto: LoginUserDto): Promise<string> {
+  async login(loginUserDto: LoginUserDto): Promise<any> {
     const user = await this.userModel.findOne({ email: loginUserDto.email });
 
     if (!user) {
@@ -47,7 +47,12 @@ export class UsersService {
       throw new UnauthorizedException('Login was not Successfully!.');
     }
 
-    return this.authService.generateJwt(user);
+    return {
+      'userId': user._id,
+      'isAdmin': user.isAdmin,
+      'jwt': await this.authService.generateJwt(user),
+      'fullName': `${user.firstName} ${user.lastName}`
+    };
   };
 
   async getList(filtersListDto: FiltersListDto): Promise<any> {
@@ -79,6 +84,40 @@ export class UsersService {
         .exec()
       : await this.userModel
         .find(conditions)
+        .sort(sortOptions)
+        .exec();
+
+    return { items: users, total };
+  }
+
+  async getAllOrders(filtersListDto: FiltersListDto): Promise<any> {
+    const sortOptions = {};
+    const {
+      sort,
+      sortOrder,
+      isPaginated = true,
+      page = 1,
+      limit = 10
+    } = filtersListDto;
+
+    const offset = getStartIndex(page, limit);
+    const itemsLimit = getLimitIndex(limit);
+
+    if (sort) {
+      sortOptions[sort] = sortOrder.toLowerCase() === 'desc' ? SORT_DESC : SORT_ASC;
+    }
+
+    const total = await this.userModel.find({ 'ordersHistory.status': 0 }).count();
+
+    const users = isPaginated
+      ? await this.userModel
+        .find({ 'ordersHistory.status': 0 })
+        .skip(offset)
+        .limit(itemsLimit)
+        .sort(sortOptions)
+        .exec()
+      : await this.userModel
+        .find({ 'ordersHistory.status': 0 })
         .sort(sortOptions)
         .exec();
 

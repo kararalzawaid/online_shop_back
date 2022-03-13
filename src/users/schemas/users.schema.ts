@@ -1,7 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-import { Address, AddressSchema } from './address.schema';
+import { Address, AddressSchema } from '@common/schemas/address.schema';
+
+import { ShoppingCart, ShoppingCartSchema } from './shopping-cart.schema';
+import { LikedItems, LikedItemsSchema } from './liked-items.schema';
+import { OrderHistory, OrderHistorySchema } from './order-history.schema';
 
 export type UserDocument = User & Document;
 
@@ -27,6 +31,15 @@ export class User {
 
   @Prop({ type: AddressSchema, required: true })
     address!: Address[];
+
+  @Prop({ type: [ShoppingCartSchema], required: false })
+    shoppingCart?: ShoppingCart[];
+
+  @Prop({ type: [LikedItemsSchema], required: false })
+    likedItems?: LikedItems[];
+
+  @Prop({ type: [OrderHistorySchema], required: false })
+    ordersHistory?: OrderHistory[];
 };
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -14,8 +14,9 @@ export class Address {
   @Prop()
     county!: string;
 
-  @Prop({ default: 'Austria' })
+  @Prop()
     country!: string;
+
 }
 
 export const AddressSchema = SchemaFactory.createForClass(Address);
