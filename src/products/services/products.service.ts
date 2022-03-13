@@ -6,7 +6,7 @@ import { ProductDto } from '@products/dto/product.dto';
 
 import { Product, ProductDocument } from '@products/schema/products.schema';
 
-import { FiltersListDto } from '@users/dto/filters-list.dto';
+import { FiltersListDto } from '@common/dto/filters-list.dto';
 
 import { getLimitIndex, getStartIndex } from '@common/helpers/pagination';
 
