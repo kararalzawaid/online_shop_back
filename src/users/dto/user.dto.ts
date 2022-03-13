@@ -30,6 +30,7 @@ export class UserDto {
   @ApiProperty()
     password!: string;
 
+
   @ApiProperty()
   @IsNotEmpty()
   @ValidateNested()
@@ -40,4 +41,6 @@ export class UserDto {
   @IsNotEmpty()
   @IsBoolean()
     isAdmin?: boolean;
+
+  passwordHash?: string;
 };

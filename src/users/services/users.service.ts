@@ -1,12 +1,14 @@
-import bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UnauthorizedException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { AuthService } from '@auth/services/auth/auth.service';
 
-import { LoginUserDto } from '@common/dto/login.dto';
 import { UserDto } from '@users/dto/user.dto';
+import { TokenDto } from '@users/dto/token.dto';
+import { LoginUserDto } from '@common/dto/login.dto';
+import { PasswordDto } from '@users/dto/password.dto';
+import { ResetPassword } from '@users/dto/reset-password.dto';
 import { FiltersListDto } from '@common/dto/filters-list.dto';
 
 import { getStartIndex, getLimitIndex } from '@common/helpers/pagination';
@@ -29,9 +31,47 @@ export class UsersService {
       throw new Error('User already exist!.');
     }
 
-    userDto.password = await bcrypt.hash(userDto.password, 12);
+    userDto.password = await this.authService.hashPassword(userDto.password);
+    userDto.passwordHash = await this.authService.hashPassword(userDto.password);
 
     return new this.userModel(userDto).save();
+  };
+
+  async recoverPassword(resetPassword: ResetPassword): Promise<User> {
+    const user = await this.userModel.findOne({ email: resetPassword.email });
+
+    if (!user) {
+      throw new Error('Invalid credentials!.');
+    }
+
+    return user;
+  }
+
+  async resetPassword(recoveryHash: string, passwordDto: PasswordDto): Promise<User> {
+    const user = await this.userModel.findOne({ passwordHash: recoveryHash });
+
+    if (!user) {
+      throw new Error('Invalid credentials!.');
+    }
+    user.password = await this.authService.hashPassword(passwordDto.password);
+    user.passwordHash = await this.authService.hashPassword(passwordDto.password);
+
+    return this.userModel.findByIdAndUpdate(user._id, user);
+  }
+
+  async refreshToken(token: TokenDto): Promise<any> {
+    const { user } = await this.authService.decode(token);
+
+    if (!user) {
+      throw new NotFoundException('Invalid credentials!.');
+    }
+
+    return {
+      'userId': user._id,
+      'isAdmin': user.isAdmin,
+      'jwt': await this.authService.generateJwt(user),
+      'fullName': `${user.firstName} ${user.lastName}`
+    };
   };
 
   async login(loginUserDto: LoginUserDto): Promise<any> {

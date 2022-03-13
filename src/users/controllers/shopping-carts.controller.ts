@@ -9,7 +9,7 @@ import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 
 import { ShoppingCart } from '@users/schemas/shopping-cart.schema';
 
-@ApiTags('users')
+@ApiTags('users-shopping-carts')
 @Controller('users')
 @ApiBearerAuth()
 export class ShoppingCartsController {
@@ -17,28 +17,28 @@ export class ShoppingCartsController {
     private readonly shoppingCartsService: ShoppingCartsService
   ) { }
 
-  @Post('/:id/shopping-cart')
+  @Post('/:id/shopping-carts')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create shopping cart' })
   async create(@Param('id') id: string, @Body() shoppingCartDto: ShoppingCartDto): Promise<ShoppingCart> {
     return await this.shoppingCartsService.create(id, shoppingCartDto);
   }
 
-  @Get('/:id/shopping-cart')
+  @Get('/:id/shopping-carts')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'get cart by id' })
   async get(@Param('id') id: string): Promise<ShoppingCart[]> {
     return this.shoppingCartsService.getByUserId(id);
   }
 
-  @Delete('/:id/shopping-cart/:cartId')
+  @Delete('/:id/shopping-carts/:cartId')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete cart by id' })
   async delete(@Param('id') id: string, @Param('cartId') cartId: string): Promise<void> {
     this.shoppingCartsService.delete(id, cartId);
   }
 
-  @Put('/:id/shopping-cart/:cartId')
+  @Put('/:id/shopping-carts/:cartId')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update cart by id' })
   async update(@Param('id') id: string, @Param('cartId') cartId: string, @Body() shoppingCartDto: ShoppingCartDto): Promise<ShoppingCart> {

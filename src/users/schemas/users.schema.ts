@@ -27,6 +27,9 @@ export class User {
     password!: string;
 
   @Prop({ required: true })
+    passwordHash!: string;
+
+  @Prop({ required: true })
     isAdmin!: boolean;
 
   @Prop({ type: AddressSchema, required: true })

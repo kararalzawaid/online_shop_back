@@ -9,7 +9,7 @@ import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 
 import { LikedItems } from '@users/schemas/liked-items.schema';
 
-@ApiTags('users')
+@ApiTags('users-liked-items')
 @Controller('users')
 @ApiBearerAuth()
 export class LikedItemsController {
