@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { ApiFile } from '@products/interceptors/files';
 
 export class ProductDto {
   @IsString()
@@ -22,10 +23,10 @@ export class ProductDto {
   @ApiProperty()
   readonly category!: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  readonly price!: number;
+  readonly price!: string;
 
   @IsString()
   @IsOptional()
@@ -39,11 +40,15 @@ export class ProductDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-    numberInStock!: number;
+  @IsString()
+    numberInStock!: string;
 
   @ApiProperty()
   @IsOptional()
   @IsString()
     falvour?: string;
+
+
+  @ApiFile({ isArray: true })
+    images: Express.Multer.File[];
 };

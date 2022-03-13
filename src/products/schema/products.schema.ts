@@ -18,7 +18,7 @@ export class Product {
     category!: string;
 
   @Prop({ required: true })
-    price!: number;
+    price!: string;
 
   @Prop({ required: false })
     color?: string;
@@ -27,10 +27,13 @@ export class Product {
     size?: string;
 
   @Prop({ required: true })
-    numberInStock!: number;
+    numberInStock!: string;
 
   @Prop({ required: false })
     falvour?: string;
+
+  @Prop({ required: false })
+    images?: string[];
 };
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

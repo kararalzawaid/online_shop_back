@@ -6,6 +6,8 @@ import {
   ValidationError,
   ValidationPipe
 } from '@nestjs/common';
+import express from 'express';
+
 // import { MongooseExceptionFilter } from '@common/filters/mongoose-exception.filter';
 import { AppModule } from './app.module';
 
@@ -26,16 +28,13 @@ async function bootstrap() {
   );
 
   // app.useGlobalFilters(new MongooseExceptionFilter());
+  app.use(express.static('files'));
 
   const options = new DocumentBuilder()
     .setTitle('Online shop Service')
     .setDescription('Online shop Service API')
     .setVersion('1.0')
     .addBearerAuth({ in: 'header', type: 'http' })
-    // .addBearerAuth(
-    //   { type: 'apiKey', scheme: 'bearer', bearerFormat: 'jwt', in: 'header', name: 'jwt' },
-    //   'access-token'
-    // )
     .build();
 
 

@@ -5,8 +5,11 @@ import { ApiImplicitQueries } from 'nestjs-swagger-api-implicit-queries-decorato
 import { UsersService } from '@users/services/users.service';
 
 import { UserDto } from '@users/dto/user.dto';
-import { FiltersListDto } from '@common/dto/filters-list.dto';
+import { TokenDto } from '@users/dto/token.dto';
 import { LoginUserDto } from '@common/dto/login.dto';
+import { PasswordDto } from '@users/dto/password.dto';
+import { ResetPassword } from '@users/dto/reset-password.dto';
+import { FiltersListDto } from '@common/dto/filters-list.dto';
 
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { AdminGuard } from '@auth/guards/admin.guard';
@@ -27,11 +30,29 @@ export class UsersController {
     return await this.usersService.login(loginUserDto);
   }
 
-  @Post()
+  @Post('refresh-token')
+  @HttpCode(200)
+  async refreshToken(@Body() token: TokenDto): Promise<any> {
+    return await this.usersService.refreshToken(token);
+  }
+
+  @Post('register')
   @ApiOperation({ summary: 'Create user' })
   async create(@Body() userDto: UserDto): Promise<User> {
     return await this.usersService.create(userDto);
   }
+
+  @Post('reset-password')
+  @ApiOperation({ summary: 'reset user' })
+  async recoverPassword(@Body() resetPassword: ResetPassword): Promise<User> {
+    return await this.usersService.recoverPassword(resetPassword);
+  }
+
+  @Put('reset-password/:recoveryHash')
+  @ApiOperation({ summary: 'Update user by id' })
+  async resetPassword(@Param('recoveryHash') recoveryHash: string, @Body() passwordDto: PasswordDto): Promise<User> {
+    return this.usersService.resetPassword(recoveryHash, passwordDto);
+  };
 
   @Get()
   @UseGuards(AdminGuard)

@@ -1,5 +1,5 @@
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller, Body, Post, Get, Query, Param, Put, Delete, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Controller, Body, Post, Get, Query, Param, Put, Delete, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiImplicitQueries } from 'nestjs-swagger-api-implicit-queries-decorator';
 
 import { ProductDto } from '@products/dto/product.dto';
@@ -11,6 +11,9 @@ import { FiltersListDto } from '@common/dto/filters-list.dto';
 import { Product } from '@products/schema/products.schema';
 
 import { AdminGuard } from '@auth/guards/admin.guard';
+import { FilesInterceptor } from '@nestjs/platform-express';
+
+import { FilesToBodyInterceptor } from '@products/interceptors/files';
 
 @ApiTags('products')
 @Controller('products')
@@ -22,8 +25,9 @@ export class ProductsController {
 
   @Post()
   @UseGuards(AdminGuard)
-  @ApiOperation({ summary: 'Create product' })
-  async create(@Body() productDto: ProductDto): Promise<Product> {
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('images'), FilesToBodyInterceptor)
+  async create(@Body() productDto: ProductDto): Promise<any> {
     return await this.productsService.create(productDto);
   }
 
