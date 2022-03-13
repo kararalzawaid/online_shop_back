@@ -6,13 +6,13 @@ export type ShoppingCartDocument = ShoppingCart & Document;
 @Schema()
 export class ShoppingCart {
   @Prop({ required: true })
-  productId!: string;
+    productId!: string;
 
   @Prop({ required: true })
-  number!: number;
+    number!: number;
 
   @Prop({ required: true })
-  _id!: string;
+    _id!: string;
 };
 
 export const ShoppingCartSchema = SchemaFactory.createForClass(ShoppingCart);

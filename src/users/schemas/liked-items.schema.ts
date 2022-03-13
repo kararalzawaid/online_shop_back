@@ -6,10 +6,10 @@ export type LikedItemsDocument = LikedItems & Document;
 @Schema()
 export class LikedItems {
   @Prop({ required: true })
-  productId!: string;
+    productId!: string;
 
   @Prop({ required: true })
-  _id!: string;
+    _id!: string;
 };
 
 export const LikedItemsSchema = SchemaFactory.createForClass(LikedItems);

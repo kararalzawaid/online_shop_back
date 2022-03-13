@@ -7,25 +7,25 @@ export type OrderDocument = Order & Document;
 @Schema()
 export class Order {
   @Prop({ required: true })
-  firstName!: string;
+    firstName!: string;
 
   @Prop({ required: true })
-  lastName!: string;
+    lastName!: string;
 
   @Prop({ required: true })
-  email!: string;
+    email!: string;
 
   @Prop({ required: true })
-  productId!: string[];
+    productId!: string[];
 
   @Prop({ required: true })
-  phoneNumber!: string;
+    phoneNumber!: string;
 
   @Prop({ required: true })
-  status!: number;
+    status!: number;
 
   @Prop({ type: AddressSchema, required: true })
-  address!: Address[];
+    address!: Address[];
 };
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

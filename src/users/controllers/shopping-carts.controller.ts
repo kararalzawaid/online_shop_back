@@ -1,5 +1,5 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller, Body, Post, Get, Query, Param, Put, HttpCode, Delete, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Body, Post, Get, Param, Put, Delete, UseGuards } from '@nestjs/common';
 
 import { ShoppingCartsService } from '@users/services/shopping-carts.service';
 

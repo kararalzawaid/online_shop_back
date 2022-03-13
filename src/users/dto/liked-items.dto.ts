@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsMongoId, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsMongoId } from 'class-validator';
 import mongoose from 'mongoose';
 
 export class LikedItemsDto {

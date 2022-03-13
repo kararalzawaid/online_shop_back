@@ -6,13 +6,13 @@ export type OrderHistoryDocument = OrderHistory & Document;
 @Schema()
 export class OrderHistory {
   @Prop({ required: true })
-  productId!: string[];
+    productId!: string[];
 
   @Prop({ required: true })
-  _id!: string;
+    _id!: string;
 
   @Prop({ required: true })
-  status!: number;
+    status!: number;
 };
 
 export const OrderHistorySchema = SchemaFactory.createForClass(OrderHistory);

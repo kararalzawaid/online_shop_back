@@ -3,19 +3,19 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 @Schema()
 export class Address {
   @Prop()
-  street!: string;
+    street!: string;
 
   @Prop()
-  zip!: string;
+    zip!: string;
 
   @Prop()
-  town!: string;
+    town!: string;
 
   @Prop()
-  county!: string;
+    county!: string;
 
   @Prop()
-  country!: string;
+    country!: string;
 
 }
 

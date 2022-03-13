@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsMongoId, IsNumber, IsArray } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsArray } from 'class-validator';
 import mongoose from 'mongoose';
 
 export class OrderHistoryDto {
